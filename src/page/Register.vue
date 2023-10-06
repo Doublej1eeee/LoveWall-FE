@@ -21,8 +21,8 @@
       </el-form-item>
 
 
-      <el-form-item label="输入密码" prop="pass">
-        <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+      <el-form-item label="输入密码" prop="password">
+        <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
       </el-form-item>
 
 
@@ -69,7 +69,7 @@ const router = useRouter();
 const ruleFormRef = ref(null)
 const ruleForm = reactive({
   account: '',
-  pass: '',
+  password: '',
   checkPass: '',
   username: ''
 })
@@ -94,13 +94,17 @@ const resetForm = () => {
   ruleFormRef.value.resetFields()
 }
 
-
+const ruleForm1 = reactive({
+  account: '',
+  password: '',
+  username: ''
+})
 
 //注册中
 const res = ref(null);
 const submitForm = async () => {//逻辑要改
   try{
-    const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/user/reg",ruleForm.value);
+    const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/user/reg",ruleForm1.value);
     res.value = response.data;
     console.log(response.data);
     if(res.value.msg === "ok" && res.value.code === 200){
@@ -126,7 +130,7 @@ const submitForm = async () => {//逻辑要改
 }}
 
 
-
+//stores
 
 
 </script>
