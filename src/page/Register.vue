@@ -103,7 +103,7 @@ const ruleForm1 = reactive({
 //注册中
 const res = ref(null);
 const submitForm = async () => {//逻辑要改
-  if(ruleForm.password != ruleForm.checkPass || ruleForm.account === "" || ruleForm.username ===""){
+  if(ruleForm.password !== ruleForm.checkPass || ruleForm.account === "" || ruleForm.username ===""){
     ElNotification({
       title: "输入错误！",
       message: h("i", { style: "color: teal" }, "请确保填完所有信息以及保证两次密码一致！"),
