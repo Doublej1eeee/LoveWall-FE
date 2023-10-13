@@ -1,4 +1,5 @@
 <template>
+  <div class="form">
   <div class="container">
 
     <div class="title">用户登录</div>
@@ -19,12 +20,15 @@
       </el-form-item>
 
       <el-form-item>
+        <div class="button-container">
         <el-button type="primary" @click="onSubmit">登录</el-button>
         <el-button @click="onReset">重置</el-button>
+        </div>
       </el-form-item>
 
     </el-form>
 
+  </div>
   </div>
 </template>
 
@@ -122,8 +126,9 @@ const onReset = () => {
   display: flex;
   flex-direction: column;
   position: relative;
-  top: 20px; /* 上下移动 */
+  top: 100px; /* 上下移动 */
   left: -40px; /* 左右移动 */
+
 
 }
 
@@ -132,7 +137,39 @@ const onReset = () => {
   margin-bottom: 20px;
   position: relative;
   top: -20px; /* 上下移动 */
-  left: 25px; /* 左右移动 */
+  left: 40px; /* 左右移动 */
+}
+
+
+.button-container {
+  display: flex;
+  justify-content: space-between; /* 让按钮之间的空间均匀分布 */
+  margin-left: 55px;
+  margin-top: 15px;
+}
+
+
+
+.form {
+  background-color: rgba(255, 255, 255, .3);
+  width: 400px;
+  height: 400px;
+  border-radius: 30px;
+
+  /* 一种水平+垂直的居中定位方式 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* 这个比上次人工队计算宽高一半要好 */
+
+  /* 注入灵魂 */
+  backdrop-filter: blur(3px);
+  border-left: 2px solid rgba(255, 255, 255, .3);
+  border-top: 2px solid rgba(255, 255, 255, .3);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, .2);
+
+  text-align: center;
 }
 </style>
 

@@ -2,67 +2,70 @@
   <sidebar></sidebar>
   <div class="parent">
     <div class="child">
-      <h2 class="glowing-text">
-        <span>得成比目何辞死，</span><span>愿作鸳鸯不羡仙~</span>
-      </h2>
-      <el-form>
+      <div class="form" >
+      <h1 class="glowing-text" >
+        <span>密语o</span><span>r蜜语</span>
+      </h1>
+      <form>
         <el-form-item>
           <el-input
               v-model="form.confession"
               :rows="2"
-              type="textarea"
+              type="text"
               placeholder="心动不如行动"
               class="custom-input"
           />
         </el-form-item>
         <el-form-item class="custom-form-item">
-          <el-select v-model="form.confession_id" placeholder="请选择是否公开" class="stacked-select">
-            <el-option label="匿名" value="1" />
-            <el-option label="公开" value="2" />
+          <el-select v-model="form.choice" placeholder="请选择是否公开" >
+            <el-option label="匿名" value=0 />
+            <el-option label="公开" value=1 />
           </el-select>
         </el-form-item>
-      </el-form>
+      </form>
 
       <nav class="cloud-effect">
         <button class="effect-button" @click="handleClick();clear();" >
-          提笔诉请
+          发布
           <span></span><span></span><span></span><span></span>
         </button>
 
         <button class="effect-button" @click="clear">
-          欲说还休
+          重置
           <span></span><span></span><span></span><span></span>
         </button>
       </nav>
-
     </div>
   </div>
+ </div>
 </template>
+
 
 <script lang="ts" setup>
 import {ref,reactive,h} from "vue";
+import dayjs from 'dayjs'
 import { ElNotification } from "element-plus";
 import addStore from "../store/addStore.js";
 import axios from "axios";
 import sidebar from "../components/sidebar.vue";
 
-
+const now = new Date()
 const NewaddStore = addStore();
 
 const form = reactive({
-  confession:'',
-  confession_id: null,
-  user_id: 0
+  date:dayjs(now).format('YYYY.MM.dd-HH:mm'),
+  confession:"",
+  choice: null,
 });
 
 const clear = () => {
-  form.confession_id = null
+  form.choice = null
   form.confession = ""
 }
 //发送
 const res = ref(null);
 const handleClick = async () => {
-  if (form.confession_id === null || form.confession === '') {
+  if (form.choice === null || form.confession === '') {
     ElNotification({
       title: "失败。。。。",
       message: h("i", {style: "color: teal"}, "请输入内容，选择公开情况以后再发布吧！"),
@@ -72,6 +75,7 @@ const handleClick = async () => {
         const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/control/confession", form);
         res.value = response.data;
         console.log(response.data);
+        console.log(dayjs(now).format('YYYY-MM-DD-HH'));
         if (res.value.msg === "ok" && res.value.code === 200) {
           localStorage.setItem('isLogin', 'true');
           ElNotification({
@@ -93,6 +97,8 @@ const handleClick = async () => {
 
     }
 }
+
+
 
 
 </script>
@@ -126,18 +132,20 @@ body {
 .custom-form-item {
   margin-top: 50px; /* 调整上边距 */
   margin-bottom: 20px; /* 调整下边距 */
-  margin-left: 40px; /* 调整左边距 */
+  margin-left: 88px; /* 调整左边距 */
   margin-right: 10px; /* 调整右边距 */
 }
 
 
 .glowing-text {
-  font-size: 24px;
-  margin-bottom: 15px;
-  color: #7fa1e7;
+  font-size: 30px;
+  margin-bottom: 70px;
+  color: #f67c7c;
   text-transform: uppercase;
   letter-spacing: 5px;
   cursor: pointer;
+  position: relative;
+  top: 90px;
 }
 
 .glowing-text span {
@@ -172,17 +180,18 @@ body {
   margin-bottom: 15px;
   position: relative;
   top: 50px;
+  left: 47px;
 }
 
 
 .cloud-effect .effect-button {
-  --c: #e89d9d;
+  --c: #6ed9f1;
   background-color: transparent; /* 为按钮添加透明背景 */
   color: var(--c);
   border: 3px solid var(--c);
-  border-radius: 100px;
+  border-radius:40%; /* 使按钮变为椭圆 */
   text-align: center;
-  line-height: 60px;
+  line-height: 80px; /* 使文字垂直居中 */
   font-weight: bold;
   cursor: pointer;
   margin: 10px;
@@ -194,11 +203,11 @@ body {
   font-size: inherit;
   outline: none; /* 去除按钮聚焦时的外框 */
   top: -20px;
-  display: flex;
+  display: inline-flex; /* 将按钮改为弹性盒子以便设置垂直居中 */
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
-  height: 60px; /* 设置按钮的高度，根据需要调整 */
-  width: 130px; /* 设置按钮的宽度，根据需要调整 */
+  height: 50px; /* 设置按钮的高度，根据需要调整 */
+  width: 80px; /* 设置按钮的宽度，根据需要调整 */
 }
 
 .cloud-effect .effect-button:hover {
@@ -225,5 +234,28 @@ body {
 .cloud-effect .effect-button span:nth-child(2) { --n:2; }
 .cloud-effect .effect-button span:nth-child(3) { --n:3; }
 .cloud-effect .effect-button span:nth-child(4) { --n:4; }
+
+.form{
+  background-color: rgba(255, 255, 255, .3);
+  width: 400px;
+  height: 400px;
+  border-radius: 30px;
+
+  /* 一种水平+垂直的居中定位方式 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* 这个比上次人工队计算宽高一半要好 */
+
+  /* 注入灵魂 */
+  backdrop-filter: blur(3px);
+  border-left: 2px solid rgba(255, 255, 255, .3);
+  border-top: 2px solid rgba(255, 255, 255, .3);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, .2);
+
+  text-align: center;
+}
+
 
 </style>

@@ -24,7 +24,7 @@
 
       <li class="logout-link">
         <el-icon><CircleCloseFilled /></el-icon>
-        <a @click="HandleClick" >退出登录</a>
+            <a @click="HandleClick" >退出登录</a>
       </li>
     </ul>
   </aside>

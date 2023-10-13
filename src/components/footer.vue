@@ -34,7 +34,7 @@
 
 <style scoped>
 .foot_div {
-  position: absolute;
+  position: fixed;
   left: 2%;
   right: 2%;
   bottom: 2%;
