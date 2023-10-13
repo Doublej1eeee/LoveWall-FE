@@ -121,7 +121,7 @@ const submitForm = async () => {//逻辑要改
     return 0;
   }else{
   try{
-    const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/user/reg",ruleForm1.value);
+    const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/user/reg",ruleForm1);
     res.value = response.data;
     console.log(response.data);
     if(res.value.msg === "ok" && res.value.code === 200){
@@ -132,10 +132,10 @@ const submitForm = async () => {//逻辑要改
       });
       NewloginStore.setLogin(true);//登录状态存储
       router.push({ name: 'Express' });
-      //现在没有返回需要的数据，需要注释掉  NewuserStore.setUserInfo(res.data);//用户信息存储
+      NewuserStore.setUserInfo(res.value.data);//用户信息存储
     }
     else{
-      alert("还没写其他情况")
+      alert("注册失败")
     }
   }
   catch (error) {

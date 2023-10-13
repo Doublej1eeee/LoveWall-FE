@@ -72,7 +72,7 @@ const onSubmit = async () => {
     });
   }else{
   try {
-    const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/user/login", form.value);
+    const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/user/login", form);
     res.value = response.data;
     console.log(res.value );
 
@@ -83,7 +83,7 @@ const onSubmit = async () => {
         message: h("i", { style: "color: teal" }, "欢迎来到心动频率局！"),
       });
       NewloginStore.setLogin(true);//登录状态存储
-      NewuserStore.setUserInfo(res.value);//用户信息存储
+      NewuserStore.setUserInfo(res.value.data);//用户信息存储
       router.push({ name: 'Express' });
     }
     else if(res.value.msg === "密码错误" && res.value.code  === 402){

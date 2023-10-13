@@ -85,7 +85,7 @@ const handleClick = async () => {
           NewaddStore.setAddInfo(res.value.data);//不知道有没有问题，后端这里是要返回多少东西？
           console.log(NewaddStore.addSession);
         }
-        else {alert("还没写其他情况")}
+        else {alert("还没写其他情况，是后端问题吧")}
         }
       catch (error) {
         alert("上传失败");

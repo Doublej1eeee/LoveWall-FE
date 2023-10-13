@@ -38,13 +38,14 @@ const res = ref([]);
 onMounted( async () => {
   try {
     const response = await axios.get("https://mock.apifox.cn/m1/3336188-0-default/api/control/community");
+    if (response.data.code === 200 && response.data.msg === "ok" ){
     res.value = response.data.data.confession_list;
     console.log(response.data);
     res.value.forEach(e => {//优雅的写法，同时能保持list的响应式
       confessionList.push(e);
-    });
+    })}else{alert("请求返回出错！")}
   }catch (error) {
-    alert("获取失败");
+    alert("请求获取失败！");
     console.error(error);
     if (error.response) {
       console.log(error.response.data);
@@ -67,23 +68,29 @@ const handleComment = async () =>{
     });
     return 0;
   }else{
-    message.value="";
-    comment.value=!comment.value;
   try {
     const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/control/message", message);
+    if(response.data.msg === "ok" && response.data.code === 200){
     console.log(response.data);
     ElNotification({
       title: "评论成功",
       message: h("i", { style: "color: teal" }, "感谢您的评论"),
-    });
+    })}else {
+      alert("评论返回数据出错！");
+      console.log(response.data);
+    }
   }catch (error) {
     alert("上传失败");
     console.error(error);
-    if (error.response) {
-      console.log(error.response.data);
-    }
+    if (error.response) {console.log(error.response.data);}
+  }
+  message.value="";
+  comment.value=!comment.value;
+  }}
 
-}}}
+
+
+//没写评论删除的功能（未完成）
 
 
 
