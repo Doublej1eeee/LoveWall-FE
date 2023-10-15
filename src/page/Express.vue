@@ -2,49 +2,49 @@
   <sidebar></sidebar>
   <div class="parent">
     <div class="child">
-      <div class="form" >
-      <h1 class="glowing-text" >
-        <span>密语o</span><span>r蜜语</span>
-      </h1>
-      <form>
-        <el-form-item>
-          <el-input
-              v-model="form.confession"
-              :rows="2"
-              type="text"
-              placeholder="心动不如行动"
-              class="custom-input"
-          />
-        </el-form-item>
-        <el-form-item class="custom-form-item">
-          <el-select v-model="form.choice" placeholder="请选择是否公开" >
-            <el-option label="匿名" value=0 />
-            <el-option label="公开" value=1 />
-          </el-select>
-        </el-form-item>
-      </form>
+      <div class="form">
+        <h1 class="glowing-text">
+          <span>密语o</span><span>r蜜语</span>
+        </h1>
+        <form>
+          <el-form-item>
+            <el-input
+                v-model="form.confession"
+                :rows="2"
+                type="text"
+                placeholder="心动不如行动"
+                class="custom-input"
+            />
+          </el-form-item>
+          <el-form-item class="custom-form-item">
+            <el-select v-model="form.choice" placeholder="请选择是否公开">
+              <el-option label="匿名" value="0"></el-option>
+              <el-option label="公开" value="1"></el-option>
+            </el-select>
+          </el-form-item>
+        </form>
 
-      <nav class="cloud-effect">
-        <button class="effect-button" @click="handleClick();clear();" >
-          发布
-          <span></span><span></span><span></span><span></span>
-        </button>
+        <nav class="cloud-effect">
+          <button class="effect-button" @click="handleClick();clear();">
+            发布
+            <span></span><span></span><span></span><span></span>
+          </button>
 
-        <button class="effect-button" @click="clear">
-          重置
-          <span></span><span></span><span></span><span></span>
-        </button>
-      </nav>
+          <button class="effect-button" @click="clear">
+            重置
+            <span></span><span></span><span></span><span></span>
+          </button>
+        </nav>
+      </div>
     </div>
   </div>
- </div>
 </template>
 
 
 <script lang="ts" setup>
-import {ref,reactive,h} from "vue";
+import {ref, reactive, h} from "vue";
 import dayjs from 'dayjs'
-import { ElNotification } from "element-plus";
+import {ElNotification} from "element-plus";
 import addStore from "../store/addStore.js";
 import axios from "axios";
 import sidebar from "../components/sidebar.vue";
@@ -53,8 +53,8 @@ const now = new Date()
 const NewaddStore = addStore();
 
 const form = reactive({
-  date:dayjs(now).format('YYYY.MM.dd-HH:mm'),
-  confession:"",
+  date: dayjs(now).format('YYYY.MM.dd-HH:mm'),
+  confession: "",
   choice: null,
 });
 
@@ -71,34 +71,41 @@ const handleClick = async () => {
       message: h("i", {style: "color: teal"}, "请输入内容，选择公开情况以后再发布吧！"),
     });
   } else {
-      try {
-        const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/control/confession", form);
-        res.value = response.data;
-        console.log(response.data);
-        console.log(dayjs(now).format('YYYY-MM-DD-HH'));
-        if (res.value.msg === "ok" && res.value.code === 200) {
-          localStorage.setItem('isLogin', 'true');
+    try {
+      const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/control/confession", form,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            }});
+      res.value = response.data;
+      console.log(response.data);
+      console.log(dayjs(now).format('YYYY-MM-DD-HH'));
+      if (res.value.msg === "ok" && res.value.code === 200) {
+        ElNotification({
+          title: "发布成功！",
+          message: h("i", {style: "color: teal"}, "好好好"),
+        });
+        NewaddStore.setAddInfo(res.value.data);//不知道有没有问题，后端这里是要返回多少东西？
+        console.log(NewaddStore.addSession);
+      } else {
+        alert("还没写其他情况，是后端问题吧")
+      }
+    } catch (e) {
+      if (e.response && e.response.status === 400) {
+        res.value = e.response.data;
+        if (res.value.msg === "参数错误" && res.value.code === 404) {
           ElNotification({
-            title: "发布成功！",
-            message: h("i", {style: "color: teal"}, "好好好"),
+            title: "参数错误！",
+            message: h("i", {style: "color: teal"}, "不好"),
           });
-          NewaddStore.setAddInfo(res.value.data);//不知道有没有问题，后端这里是要返回多少东西？
-          console.log(NewaddStore.addSession);
-        }
-        else {alert("还没写其他情况，是后端问题吧")}
-        }
-      catch (error) {
-        alert("上传失败");
-        console.error(error);
-        if (error.response) {
-          console.log(error.response.data);
+        } else {
+          alert("什么鬼！");
+          console.log(res.value);
         }
       }
-
     }
+  }
 }
-
-
 
 
 </script>
@@ -129,6 +136,7 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
 .custom-form-item {
   margin-top: 50px; /* 调整上边距 */
   margin-bottom: 20px; /* 调整下边距 */
@@ -189,7 +197,7 @@ body {
   background-color: transparent; /* 为按钮添加透明背景 */
   color: var(--c);
   border: 3px solid var(--c);
-  border-radius:40%; /* 使按钮变为椭圆 */
+  border-radius: 40%; /* 使按钮变为椭圆 */
   text-align: center;
   line-height: 80px; /* 使文字垂直居中 */
   font-weight: bold;
@@ -230,12 +238,23 @@ body {
   transform: translateY(0) scale(2);
 }
 
-.cloud-effect .effect-button span:nth-child(1) { --n:1; }
-.cloud-effect .effect-button span:nth-child(2) { --n:2; }
-.cloud-effect .effect-button span:nth-child(3) { --n:3; }
-.cloud-effect .effect-button span:nth-child(4) { --n:4; }
+.cloud-effect .effect-button span:nth-child(1) {
+  --n: 1;
+}
 
-.form{
+.cloud-effect .effect-button span:nth-child(2) {
+  --n: 2;
+}
+
+.cloud-effect .effect-button span:nth-child(3) {
+  --n: 3;
+}
+
+.cloud-effect .effect-button span:nth-child(4) {
+  --n: 4;
+}
+
+.form {
   background-color: rgba(255, 255, 255, .3);
   width: 400px;
   height: 400px;

@@ -10,10 +10,10 @@ const userStore = defineStore(
 
 
         const userSession = reactive({
-
+            avatar:"",
             username: "",
             sex: "",
-            telephone: "",
+            phonenum: "",
             major: "",
             age:"",
             motto:"",
@@ -24,9 +24,10 @@ const userStore = defineStore(
         });
 
         const setUserInfo = (info) => {
+            userSession.avatar = info.avatar;
             userSession.username = info.username;
             userSession.sex = info.sex;
-            userSession.telephone = info.telephone;
+            userSession.phonenum = info.phonenum;
             userSession.major = info.major;
             userSession.age = info.age;
             userSession.motto = info.motto;

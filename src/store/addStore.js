@@ -2,26 +2,24 @@ import {defineStore} from "pinia";
 import {reactive} from "vue";
 
 const addStore = defineStore(
-    "add", ()=>{
+    "add", () => {
         const addSession = reactive([]);
 
-        const setAddInfo = (info)=> {
+        const setAddInfo = (info) => {
             addSession.value = info
 
-            }
+        }
 
 
-        return{
+        return {
             addSession,
             setAddInfo
         };
     },
 
 
-
     {
         persist: true,
     }
-
 );
 export default addStore;

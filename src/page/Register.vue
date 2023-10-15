@@ -1,64 +1,62 @@
 <template>
   <div class="form">
-  <div class="container">
-    <div class="title">用户注册</div>
-    <el-form
-        ref="ruleFormRef"
-        :model="ruleForm"
-        :rules="rules"
-        status-icon
-        label-width="120px"
-    >
+    <div class="container">
+      <div class="title">用户注册</div>
+      <el-form
+          ref="ruleFormRef"
+          :model="ruleForm"
+          :rules="rules"
+          status-icon
+          label-width="120px"
+      >
 
-      <div class="input-container">
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model.number="ruleForm.username" />
-      </el-form-item>
-
-
-      <el-form-item label="账号" prop="account">
-        <el-input v-model.number="ruleForm.account" />
-      </el-form-item>
-
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model.number="ruleForm.email" />
-      </el-form-item>
+        <div class="input-container">
+          <el-form-item label="用户名" prop="username">
+            <el-input v-model.number="ruleForm.username"/>
+          </el-form-item>
 
 
-      <el-form-item label="输入密码" prop="password">
-        <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
-      </el-form-item>
+          <el-form-item label="账号" prop="account">
+            <el-input v-model.number="ruleForm.account"/>
+          </el-form-item>
+
+          <el-form-item label="邮箱" prop="emails">
+            <el-input v-model.number="ruleForm.emails"/>
+          </el-form-item>
 
 
-      <el-form-item label="确认密码" prop="checkPass">
-        <el-input
-            v-model="ruleForm.checkPass"
-            type="password"
-            autocomplete="off"
-        />
-      </el-form-item>
-      </div>
+          <el-form-item label="输入密码" prop="password">
+            <el-input v-model="ruleForm.password" autocomplete="off"/>
+          </el-form-item>
 
 
-
-      <el-form-item>
-        <div class="button-container">
-        <el-button type="primary" @click="submitForm">注册</el-button>
-        <el-button @click="resetForm">重置</el-button>
+          <el-form-item label="确认密码" prop="checkPass">
+            <el-input
+                v-model="ruleForm.checkPass"
+                autocomplete="off"
+            />
+          </el-form-item>
         </div>
-      </el-form-item>
 
 
-    </el-form>
+        <el-form-item>
+          <div class="button-container">
+            <el-button type="primary" @click="submitForm">注册</el-button>
+            <el-button @click="resetForm">重置</el-button>
+          </div>
+        </el-form-item>
 
 
-  </div>
+      </el-form>
+
+
+    </div>
   </div>
 
 </template>
 
 <script setup>
-import { reactive, ref, h } from 'vue'
+import {reactive, ref, h} from 'vue'
 import {useRouter} from "vue-router";
 import {ElNotification} from "element-plus";
 import loginStore from "../store/loginStore.js";
@@ -77,7 +75,7 @@ const ruleForm = reactive({
   password: '',
   checkPass: '',
   username: '',
-  email:''
+  emails: ''
 })
 
 const validatePass = (rule, value, callback) => {
@@ -89,14 +87,14 @@ const validatePass = (rule, value, callback) => {
 };
 
 const rules = reactive({
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+  password: [{required: true, message: '请输入密码', trigger: 'blur'}],
   checkPass: [
-      { required: true, message: '请再次输入密码', trigger: 'blur' },
-      { validator: validatePass, trigger: 'blur' }
+    {required: true, message: '请再次输入密码', trigger: 'blur'},
+    {validator: validatePass, trigger: 'blur'}
   ],
-  account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-  email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }]
+  account: [{required: true, message: '请输入账号', trigger: 'blur'}],
+  emails: [{required: true, message: '请输入邮箱', trigger: 'blur'}]
 })
 
 const resetForm = () => {
@@ -107,44 +105,75 @@ const ruleForm1 = reactive({
   account: '',
   password: '',
   username: '',
-  email:''
+  emails: ''
 })
 
 //注册中
 const res = ref(null);
 const submitForm = async () => {//逻辑要改
-  if(ruleForm.password !== ruleForm.checkPass || ruleForm.account === "" || ruleForm.username ===""){
+  if (ruleForm.password !== ruleForm.checkPass || ruleForm.account === "" || ruleForm.username === "" || ruleForm.emails === "") {
     ElNotification({
       title: "输入错误！",
-      message: h("i", { style: "color: teal" }, "请确保填完所有信息以及保证两次密码一致！"),
+      message: h("i", {style: "color: teal"}, "请确保填完所有信息以及保证两次密码一致！"),
     });
     return 0;
-  }else{
-  try{
-    const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/user/reg",ruleForm1);
-    res.value = response.data;
-    console.log(response.data);
-    if(res.value.msg === "ok" && res.value.code === 200){
-      localStorage.setItem('isLogin', 'true');
-      ElNotification({
-        title: "注册成功！",
-        message: h("i", { style: "color: teal" }, "欢迎回到心动频率局！"),
-      });
-      NewloginStore.setLogin(true);//登录状态存储
-      router.push({ name: 'Express' });
-      NewuserStore.setUserInfo(res.value.data);//用户信息存储
-    }
-    else{
-      alert("注册失败")
+  } else {
+    try {
+      console.log(ruleForm.emails);
+      const response = await axios.post("https://mock.apifox.cn/m1/3336188-0-default/api/user/reg", ruleForm1,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            }});
+      res.value = response.data;
+      console.log(response.data);
+      if (res.value.msg === "ok" && res.value.code === 200) {
+        ElNotification({
+          title: "注册成功！",
+          message: h("i", {style: "color: teal"}, "请先登录吧！"),
+        });
+        router.push({name: "Login"});
+      }
+    } catch (e) {
+      if (e.response && e.response.status === 400) {
+        res.value = e.response.data;
+        if (res.value.msg === "参数错误" && res.value.code === 404) {
+          ElNotification({
+            title: "参数错误！",
+            message: h("i", {style: "color: teal"}, "未接收或未发送的bug！"),
+          });
+        } else if (res.value.msg === "账号已注册" && res.value.code === 401) {
+          ElNotification({
+            title: "账号已注销！",
+            message: h("i", {style: "color: teal"}, "去登陆吧！"),
+          });
+        } else if (res.value.msg === "邮箱已注册" && res.value.code === 401) {
+          ElNotification({
+            title: "邮箱已注册！",
+            message: h("i", {style: "color: teal"}, "换一个邮箱吧！"),
+          });
+        } else if (res.value.msg === "Account必须由英文字母、数字或下划线组成" && res.value.code === 405) {
+          ElNotification({
+            title: "账号必须由英文字母、数字或下划线组成！",
+            message: h("i", {style: "color: teal"}, "换一个账号吧"),
+          });
+        } else if (res.value.msg === "Password长度必须大于8位" && res.value.code === 406) {
+          ElNotification({
+            title: "密码长度必须大于8位！",
+            message: h("i", {style: "color: teal"}, "换一个密码吧"),
+          });
+        } else if (res.value.msg === "密码中必须包含，数字和特殊字符" && res.value.code === 407) {
+          ElNotification({
+            title: "密码中必须包含，数字和特殊字符!",
+            message: h("i", {style: "color: teal"}, "换一个密码吧"),
+          });
+        } else {
+          alert("什么鬼！")
+        }
+      }
     }
   }
-  catch (error) {
-    alert("上传失败");
-    console.error(error);
-    if (error.response) {
-      console.log(error.response.data);
-    }
-}}}
+}
 
 //stores
 
@@ -159,7 +188,6 @@ const submitForm = async () => {//逻辑要改
   top: 20px; /* 上下移动 */
   left: -40px; /* 左右移动 */
 }
-
 
 
 .title {
@@ -204,6 +232,22 @@ const submitForm = async () => {//逻辑要改
   box-shadow: 2px 2px 10px rgba(0, 0, 0, .2);
 
   text-align: center;
+}
+
+input {
+  font-size: inherit;
+  width: 100%;
+  outline: none;
+  display: block;
+  font-weight: 400;
+  line-height: 1.6;
+  padding: 3px 3px 3px 10px;
+  border-radius: 20px;
+  background-color: transparent;
+  transition: border-color 0.2s ease-in-out;
+  background-repeat: no-repeat;
+  background-position: right 2% center;
+  background-size: 2rem 2rem;
 }
 
 </style>

@@ -17,24 +17,24 @@
 
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import {ref, onMounted, onBeforeUnmount} from 'vue';
 import sidebar from "../components/sidebar.vue";
 
 const time = ref(null);
 const index = ref(0);
 const images = [
-        '/1.png.png',
-        '/2.png.png',
-        '/3.png.png',
-        '/4.png.png',
-        '/5.png.png',
-        '/6.png.png',
-        '/7.png.png',
-        '/8.png.png',
-        '/9.png.png',
-        '/10.png.png',
-        '/11.png.png',
-        '/12.png.png',
+  '/1.png.png',
+  '/2.png.png',
+  '/3.png.png',
+  '/4.png.png',
+  '/5.png.png',
+  '/6.png.png',
+  '/7.png.png',
+  '/8.png.png',
+  '/9.png.png',
+  '/10.png.png',
+  '/11.png.png',
+  '/12.png.png',
 ];
 
 

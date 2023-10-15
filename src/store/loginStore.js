@@ -5,25 +5,22 @@ const loginStore = defineStore(
     "login",
 
 
-
-    ()=>{
-        const loginSession =ref(false);//状态
-        const setLogin = (loginNewsession)=>{
-            loginSession.value=loginNewsession;
+    () => {
+        const loginSession = ref(false);//状态
+        const setLogin = (loginNewsession) => {
+            loginSession.value = loginNewsession;
 
         };//改变状态的方法
 
-        return{
+        return {
             loginSession,
             setLogin
         };
     },
 
 
-
     {
         persist: true,
     }
-
-    );
+);
 export default loginStore;

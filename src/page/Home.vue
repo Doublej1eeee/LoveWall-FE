@@ -1,6 +1,6 @@
 <template>
   <div class="confession-wall">
-    <img src="/6cf2db8fece33bd3bf7a54638f065af.jpg" alt="橙汁" class="my-image" />
+    <img src="/6cf2db8fece33bd3bf7a54638f065af.jpg" alt="橙汁" class="my-image"/>
     <h1 class="title">心动频率局</h1>
     <p class="description">一个简单的表白墙网站项目，提供一个平台让人们可以表达他们的爱意和好感。</p>
 
@@ -18,12 +18,12 @@
 
 <script setup>
 
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 const modules = ref([
-  { id: 1, title: '极简', content: '我们追求简单，自由，尝试用户自适应' },
-  { id: 2, title: '开放', content: '我们将开源此网站，欢迎大家前来交流' },
-  { id: 3, title: '纯净', content: '我们控制了使用人群，保证了用户体验' },
+  {id: 1, title: '极简', content: '我们追求简单，自由，尝试用户自适应'},
+  {id: 2, title: '开放', content: '我们将开源此网站，欢迎大家前来交流'},
+  {id: 3, title: '纯净', content: '我们控制了使用人群，保证了用户体验'},
 ]);
 
 </script>
@@ -61,6 +61,6 @@ const modules = ref([
   background-color: #f9f9f9;
   padding: 10px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 </style>

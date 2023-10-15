@@ -4,18 +4,21 @@
     <router-link v-for="btn in buttons" :key="btn.name" :to="btn.path" class="button">
       <svg width="140" height="40">
         <rect class="shape" width="140" height="40"></rect>
-        <text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" fill='#000000' font-size="14">{{ btn.name }}</text>
+        <text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" fill='#000000' font-size="14">{{
+            btn.name
+          }}
+        </text>
       </svg>
     </router-link>
   </div>
 </template>
 
 
-<script setup >
+<script setup>
 const buttons = [
-  { name: '首页', path: '/' },
-  { name: '登录', path: '/login' },
-  { name: '注册', path: '/register' }
+  {name: '首页', path: '/'},
+  {name: '登录', path: '/login'},
+  {name: '注册', path: '/register'}
 ]
 </script>
 

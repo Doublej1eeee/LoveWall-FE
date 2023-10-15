@@ -12,6 +12,7 @@ import Information from "../page/Information.vue";
 
 
 
+
 const routes = [
     {
         path:"/",

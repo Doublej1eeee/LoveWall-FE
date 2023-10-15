@@ -10,7 +10,7 @@
     </div>
 
     <div class="content">
-      <el-descriptions :column="4" size="small" >
+      <el-descriptions :column="4" size="small">
 
         <el-descriptions-item label="QQ group"
         >190299836&ensp;&ensp;&ensp;
@@ -100,6 +100,7 @@
   transform: none;
   background-color: rgba(0, 0, 255, 0.75);
 }
+
 .button-link {
   text-decoration: none;
   display: flex;

@@ -1,10 +1,11 @@
 <template>
   <aside class="sidebar">
     <div class="logo">
-      <h2>头像</h2>
+      <img :src=NewuserStore.userSession.avatar alt="头像" class="avatar" />
     </div>
     <ul class="links">
-      <h4>菜单</h4>
+      <h4>{{NewuserStore.userSession.username}}</h4>
+      <br>
       <li>
         <el-icon><House /></el-icon>
         <router-link to="/Information">个人信息</router-link>
@@ -34,6 +35,14 @@
 import {useRouter} from "vue-router";
 import {ElNotification} from "element-plus";
 import {h} from "vue";
+import userStore from "../store/userStore.js";
+
+const NewuserStore = userStore();
+
+
+
+
+
 const router = useRouter();
 
 const HandleClick = () =>{
@@ -173,5 +182,13 @@ body {
 
 .links .logout-link {
   margin-top: 20px;
+}
+
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 0px;
 }
 </style>
