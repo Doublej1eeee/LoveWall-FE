@@ -13,6 +13,7 @@ import Information from "../page/Information.vue";
 
 
 
+
 const routes = [
     {
         path:"/",
@@ -75,7 +76,8 @@ const routes = [
         path:"/Information",
         name:"Information",
         component:Information
-    }
+    },
+
 
 ];
 

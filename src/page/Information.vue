@@ -154,7 +154,7 @@ const sizeForm = reactive({
 const res = ref(null);
 const onSubmit = async () => {
   try {
-    const response = await axios.put("http://127.0.0.1:4523/m1/3336188-0-default/api/control/information", sizeForm,{
+    const response = await axios.put("https://mock.apifox.cn/m1/3336188-0-default/api/control/information", sizeForm,{
       headers: {
         'Content-Type': 'application/json',
       }});
@@ -222,13 +222,13 @@ const fileList = ref([]);
 const confirm = async () => {
   const param = new FormData();
   fileList.value.forEach((val) => {
-    param.append('avatar', val.raw);
+    param.append('image', val.raw);
   });
   fileList.value = [];
   try {
     const response = await axios.post('https://mock.apifox.cn/m1/3336188-0-default/api/control/image', param, {
       headers: {
-        'Content-Type': 'application/form-data',
+        'Content-Type': 'multipart/form-data',
       }
     });
     if (response.data.code === 200 && response.data.msg === "ok") {
